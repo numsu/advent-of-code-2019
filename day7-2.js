@@ -137,16 +137,13 @@ const calculateAmplifierValues = (intcodes, phase) => {
 	const amplifiers = [...'ABCDE'].map((_, i) =>
 			new IntcodeComputer(intcodes, phase[i]).run());
 	let result = 0;
-	let value;
-	let done = false;
+	let value, done;
 
 	for (let i = 0; !done; i++) {
-		const next = i % phase.length;
-		({ value, done } = amplifiers[next].next(result));
+		({ value, done } = amplifiers[i % phase.length].next(result));
 		if (value) {
 			result = value;
 		}
-		i++;
 	}
 
 	return result;
